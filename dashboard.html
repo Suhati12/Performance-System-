@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}Analytics Dashboard - AI Student Performance System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h2 class="fw-bold text-navy mb-1"><i class="fa-solid fa-chart-line text-accent me-2"></i>Executive Analytics Dashboard</h2>
+            <p class="text-muted mb-0">Overview of student cohort academic metrics, performance distributions & model diagnostic plots.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('predict') }}" class="btn btn-accent fw-bold shadow-sm">
+                <i class="fa-solid fa-plus me-1"></i> New Student Prediction
+            </a>
+        </div>
+    </div>
+
+    <!-- Top KPI Cards Grid -->
+    <div class="row g-3 mb-5">
+        <div class="col-md-4 col-lg-2">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="card-body p-3 text-center">
+                    <div class="feature-icon bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-2 sm-icon">
+                        <i class="fa-solid fa-users fs-4"></i>
+                    </div>
+                    <small class="text-muted text-uppercase fw-semibold d-block">Total Cohort</small>
+                    <h3 class="fw-bold text-navy mb-0">{{ stats.total_students }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="card-body p-3 text-center">
+                    <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-2 sm-icon">
+                        <i class="fa-solid fa-award fs-4"></i>
+                    </div>
+                    <small class="text-muted text-uppercase fw-semibold d-block">Avg Final Marks</small>
+                    <h3 class="fw-bold text-success mb-0">{{ stats.avg_marks }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-2">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="card-body p-3 text-center">
+                    <div class="feature-icon bg-info bg-opacity-10 text-info rounded-circle mx-auto mb-2 sm-icon">
+                        <i class="fa-solid fa-clipboard-user fs-4"></i>
+                    </div>
+                    <small class="text-muted text-uppercase fw-semibold d-block">Avg Attendance</small>
+                    <h3 class="fw-bold text-info mb-0">{{ stats.avg_attendance }}%</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="card-body p-3 text-center">
+                    <div class="feature-icon bg-emerald bg-opacity-10 text-emerald rounded-circle mx-auto mb-2 sm-icon">
+                        <i class="fa-solid fa-circle-check fs-4"></i>
+                    </div>
+                    <small class="text-muted text-uppercase fw-semibold d-block">Pass Rate</small>
+                    <h3 class="fw-bold text-emerald mb-0">{{ stats.pass_pct }}% <span class="fs-6 text-muted font-normal">({{ stats.pass_count }}/{{ stats.total_students }})</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-white border-start border-danger border-4">
+                <div class="card-body p-3 text-center">
+                    <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-2 sm-icon">
+                        <i class="fa-solid fa-triangle-exclamation fs-4"></i>
+                    </div>
+                    <small class="text-muted text-uppercase fw-semibold d-block">High Risk Students</small>
+                    <h3 class="fw-bold text-danger mb-0">{{ stats.high_risk_count }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Analytics Plots Grid -->
+    <h4 class="fw-bold text-navy mb-3"><i class="fa-solid fa-image me-2 text-primary"></i>Model Diagnostic & Clustering Visualizations</h4>
+    
+    <div class="row g-4 mb-4">
+        <!-- Plot 1: Regression Actual vs Predicted -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <h5 class="fw-bold text-navy mb-0">1. Actual vs Predicted Final Marks</h5>
+                    <small class="text-muted">Regression model fit line evaluation</small>
+                </div>
+                <div class="card-body p-3 text-center">
+                    <img src="{{ url_for('static', filename='plots/regression_actual_vs_pred.png') }}" alt="Actual vs Predicted Marks" class="img-fluid rounded-3 border shadow-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Plot 2: Residual Error Distribution -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <h5 class="fw-bold text-navy mb-0">2. Regression Residual Error Distribution</h5>
+                    <small class="text-muted">Normality check of regression prediction errors</small>
+                </div>
+                <div class="card-body p-3 text-center">
+                    <img src="{{ url_for('static', filename='plots/regression_residuals.png') }}" alt="Regression Residual Error" class="img-fluid rounded-3 border shadow-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Plot 3: Confusion Matrix Grid -->
+        <div class="col-lg-12">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <h5 class="fw-bold text-navy mb-0">3. Classifier Confusion Matrices Comparison</h5>
+                    <small class="text-muted">Diagnostic True Positive, True Negative, False Positive, False Negative breakdown across 5 models</small>
+                </div>
+                <div class="card-body p-3 text-center">
+                    <img src="{{ url_for('static', filename='plots/confusion_matrices.png') }}" alt="Confusion Matrices" class="img-fluid rounded-3 border shadow-sm max-h-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Plot 4: Elbow Method -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <h5 class="fw-bold text-navy mb-0">4. K-Means Elbow Method Plot</h5>
+                    <small class="text-muted">Inertia curve determining optimal cluster count K=3</small>
+                </div>
+                <div class="card-body p-3 text-center">
+                    <img src="{{ url_for('static', filename='plots/elbow_method.png') }}" alt="Elbow Method Plot" class="img-fluid rounded-3 border shadow-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- Plot 5: Cluster Distribution -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
+                    <h5 class="fw-bold text-navy mb-0">5. K-Means Student Performance Clusters</h5>
+                    <small class="text-muted">Scatter representation of High Performing, Average, and At Risk clusters</small>
+                </div>
+                <div class="card-body p-3 text-center">
+                    <img src="{{ url_for('static', filename='plots/cluster_distribution.png') }}" alt="Cluster Distribution" class="img-fluid rounded-3 border shadow-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

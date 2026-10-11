@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - AI Student Performance & Risk Analysis System{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<div class="hero-section py-5 bg-gradient-navy text-white shadow-sm mb-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-accent text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-3">
+                    <i class="fa-solid fa-microchip me-1"></i> Machine Learning Project Demonstration
+                </span>
+                <h1 class="display-4 fw-bold mb-3 hero-title">
+                    AI-Based Student Performance Prediction & Risk Analysis
+                </h1>
+                <p class="lead text-light-50 mb-4">
+                    An end-to-end Machine Learning web platform designed to analyze student academic behavioral parameters, forecast final exam marks, predict Pass/Fail outcomes, perform unsupervised K-Means student clustering, and flag early academic risk factors.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('predict') }}" class="btn btn-accent btn-lg px-4 py-3 fw-bold shadow">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Predict Student Performance
+                    </a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg px-4 py-3 fw-semibold">
+                        <i class="fa-solid fa-chart-line me-2"></i> View Analytics Dashboard
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0 text-center">
+                <div class="hero-card-glass p-4 rounded-4 shadow-lg border border-light border-opacity-25">
+                    <i class="fa-solid fa-brain text-accent display-1 mb-3"></i>
+                    <h4 class="fw-bold mb-2">Complete ML Workflow</h4>
+                    <p class="text-white-50 small mb-3">Data Preprocessing → Feature Scaling → Model Comparison → K-Means Clustering → Real-Time Web Inference</p>
+                    <div class="row text-center g-2">
+                        <div class="col-4">
+                            <div class="p-2 bg-white bg-opacity-10 rounded">
+                                <h5 class="fw-bold text-accent mb-0">800+</h5>
+                                <small class="text-white-50">Records</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-white bg-opacity-10 rounded">
+                                <h5 class="fw-bold text-accent mb-0">5</h5>
+                                <small class="text-white-50">Classifiers</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-white bg-opacity-10 rounded">
+                                <h5 class="fw-bold text-accent mb-0">95%+</h5>
+                                <small class="text-white-50">Accuracy</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container py-4">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-navy mb-2">Core System Modules</h2>
+        <p class="text-muted">Comprehensive AI analytics workflow for academic evaluation</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Module 1 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-primary bg-opacity-10 text-primary rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-calculator fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">1. Marks Regression</h5>
+                    <p class="text-muted small">Predicts continuous final exam marks using Linear Regression and Random Forest Regressor models evaluated via MSE, RMSE, MAE, and R².</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-success bg-opacity-10 text-success rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-check-double fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">2. Pass/Fail Classification</h5>
+                    <p class="text-muted small">Evaluates 5 classification models (Logistic Regression, Decision Tree, Random Forest, SVM, Naive Bayes) with confusion matrix diagnostics.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-warning bg-opacity-10 text-warning rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-triangle-exclamation fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">3. Academic Risk Engine</h5>
+                    <p class="text-muted small">Flags High, Medium, and Low academic risk students based on attendance threshold, study hours, backlogs, and ML model predictions.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-info bg-opacity-10 text-info rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-diagram-project fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">4. K-Means Clustering</h5>
+                    <p class="text-muted small">Groups students into logical behavioral clusters (High Performing, Average Performing, At Risk) optimized via the Elbow Method.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 5 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-purple bg-opacity-10 text-purple rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-chart-pie fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">5. Visual Analytics</h5>
+                    <p class="text-muted small">Generates publication-quality Seaborn and Matplotlib diagnostic charts (actual vs predicted, residual distribution, confusion matrices, elbow plot).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 6 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm hover-card rounded-4">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon bg-dark bg-opacity-10 text-dark rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-laptop-code fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-navy">6. Interactive Web Interface</h5>
+                    <p class="text-muted small">Allows instant student input parameter evaluation, dynamic risk breakdown factor explanation, and live database record filtering.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Workflow Diagram Section -->
+<div class="bg-white py-5 mt-5 shadow-inner">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-navy">Machine Learning Execution Architecture</h3>
+            <p class="text-muted">Standard MCA project data pipeline architecture</p>
+        </div>
+        <div class="row text-center g-3 align-items-center justify-content-center">
+            <div class="col-md-2 col-6">
+                <div class="p-3 bg-light rounded-3 shadow-sm border">
+                    <i class="fa-solid fa-database text-primary fs-3 mb-2"></i>
+                    <h6 class="fw-bold mb-0">Dataset</h6>
+                    <small class="text-muted">800+ Records</small>
+                </div>
+            </div>
+            <div class="col-auto d-none d-md-block"><i class="fa-solid fa-arrow-right text-muted fs-4"></i></div>
+            <div class="col-md-2 col-6">
+                <div class="p-3 bg-light rounded-3 shadow-sm border">
+                    <i class="fa-solid fa-filter text-success fs-3 mb-2"></i>
+                    <h6 class="fw-bold mb-0">Preprocessing</h6>
+                    <small class="text-muted">Impute & Scale</small>
+                </div>
+            </div>
+            <div class="col-auto d-none d-md-block"><i class="fa-solid fa-arrow-right text-muted fs-4"></i></div>
+            <div class="col-md-2 col-6">
+                <div class="p-3 bg-light rounded-3 shadow-sm border">
+                    <i class="fa-solid fa-robot text-warning fs-3 mb-2"></i>
+                    <h6 class="fw-bold mb-0">Model Training</h6>
+                    <small class="text-muted">Reg + Clf + K-Means</small>
+                </div>
+            </div>
+            <div class="col-auto d-none d-md-block"><i class="fa-solid fa-arrow-right text-muted fs-4"></i></div>
+            <div class="col-md-2 col-6">
+                <div class="p-3 bg-light rounded-3 shadow-sm border">
+                    <i class="fa-solid fa-floppy-disk text-info fs-3 mb-2"></i>
+                    <h6 class="fw-bold mb-0">Joblib Models</h6>
+                    <small class="text-muted">models/*.pkl</small>
+                </div>
+            </div>
+            <div class="col-auto d-none d-md-block"><i class="fa-solid fa-arrow-right text-muted fs-4"></i></div>
+            <div class="col-md-2 col-6">
+                <div class="p-3 bg-light rounded-3 shadow-sm border">
+                    <i class="fa-solid fa-globe text-danger fs-3 mb-2"></i>
+                    <h6 class="fw-bold mb-0">Flask Web App</h6>
+                    <small class="text-muted">Live Dashboard</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

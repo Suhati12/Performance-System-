@@ -1,0 +1,153 @@
+/* Modern Design Tokens & Theme Colors */
+:root {
+    --bg-navy: #0f172a;
+    --bg-dark-navy: #1e293b;
+    --primary-blue: #2563eb;
+    --accent-gold: #f59e0b;
+    --emerald-green: #10b981;
+    --danger-red: #ef4444;
+    --light-bg: #f8fafc;
+    --font-heading: 'Outfit', -apple-system, sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--light-bg);
+    color: #334155;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-text {
+    font-family: var(--font-heading);
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* Navbar Custom Styling */
+.bg-dark-navy {
+    background-color: var(--bg-dark-navy) !important;
+}
+
+.text-navy {
+    color: var(--bg-navy) !important;
+}
+
+.text-accent {
+    color: var(--accent-gold) !important;
+}
+
+.bg-accent {
+    background-color: var(--accent-gold) !important;
+}
+
+.btn-accent {
+    background-color: var(--accent-gold);
+    color: #0f172a;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.btn-accent:hover {
+    background-color: #d97706;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn-navy {
+    background-color: var(--bg-navy);
+    color: #ffffff;
+}
+
+.btn-navy:hover {
+    background-color: var(--bg-dark-navy);
+    color: #ffffff;
+}
+
+/* Hero Section */
+.bg-gradient-navy {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e1b4b 100%);
+}
+
+.hero-title {
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+}
+
+.hero-card-glass {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Feature Cards & Animations */
+.hover-card {
+    transition: transform 0.3s ease, shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sm-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.bg-light-blue {
+    background-color: #eff6ff;
+}
+
+.bg-purple {
+    background-color: #8b5cf6;
+}
+
+.text-purple {
+    color: #8b5cf6;
+}
+
+.bg-emerald {
+    background-color: #10b981;
+}
+
+.text-emerald {
+    color: #10b981;
+}
+
+/* Utility Utilities */
+.max-w-lg {
+    max-width: 600px;
+}
+
+.max-w-sm {
+    max-width: 360px;
+}
+
+.max-h-500 {
+    max-height: 520px;
+    object-fit: contain;
+}
+
+/* Table Styling */
+.table hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Form Input Focus */
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.15);
+}

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Model Performance Comparison - AI System{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-navy"><i class="fa-solid fa-code-compare text-accent me-2"></i>Machine Learning Model Performance Comparison</h2>
+        <p class="text-muted">Quantitative evaluation metrics calculated across all trained regression and classification models.</p>
+    </div>
+
+    <!-- 1. Regression Models Comparison Table -->
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-header bg-navy text-white rounded-top-4 py-3 px-4 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold"><i class="fa-solid fa-chart-bar me-2 text-accent"></i>Module 2: Regression Models (Target: Final Marks)</h5>
+            <span class="badge bg-accent text-dark fw-bold">Evaluation Metrics</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Model Name</th>
+                            <th>Mean Squared Error (MSE)</th>
+                            <th>Root MSE (RMSE)</th>
+                            <th>Mean Absolute Error (MAE)</th>
+                            <th>R² Score (Variance Explained)</th>
+                            <th class="text-center pe-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reg in regression_metrics %}
+                        <tr>
+                            <td class="ps-4 fw-bold text-navy">
+                                <i class="fa-solid fa-calculator text-primary me-2"></i> {{ reg.model }}
+                            </td>
+                            <td><code class="text-dark">{{ reg.mse }}</code></td>
+                            <td><code class="text-dark">{{ reg.rmse }}</code></td>
+                            <td><code class="text-dark">{{ reg.mae }}</code></td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success fw-bold px-3 py-2 fs-6">
+                                    {{ (reg.r2 * 100)|round2 }}%
+                                </span>
+                            </td>
+                            <td class="text-center pe-4">
+                                {% if loop.first %}
+                                    <span class="badge bg-success"><i class="fa-solid fa-check me-1"></i> Selected Model</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Benchmark</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Classification Models Comparison Table -->
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-header bg-dark-navy text-white rounded-top-4 py-3 px-4 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold"><i class="fa-solid fa-check-double me-2 text-accent"></i>Module 3: Classification Models (Target: Pass / Fail)</h5>
+            <span class="badge bg-accent text-dark fw-bold">5 Algorithm Comparison</span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Classification Model</th>
+                            <th>Accuracy</th>
+                            <th>Precision</th>
+                            <th>Recall</th>
+                            <th>F1-Score</th>
+                            <th class="text-center pe-4">Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clf in classification_metrics %}
+                        <tr {% if clf.model == 'Support Vector Machine' or clf.model == 'Random Forest' %}class="table-success bg-opacity-25"{% endif %}>
+                            <td class="ps-4 fw-bold text-navy">
+                                <i class="fa-solid fa-robot text-info me-2"></i> {{ clf.model }}
+                            </td>
+                            <td><span class="fw-semibold text-dark">{{ (clf.accuracy * 100)|round2 }}%</span></td>
+                            <td><span class="fw-semibold text-dark">{{ (clf.precision * 100)|round2 }}%</span></td>
+                            <td><span class="fw-semibold text-dark">{{ (clf.recall * 100)|round2 }}%</span></td>
+                            <td>
+                                <span class="badge bg-primary px-3 py-2 fs-6">
+                                    {{ clf.f1 }}
+                                </span>
+                            </td>
+                            <td class="text-center pe-4">
+                                {% if clf.f1 >= 0.96 %}
+                                    <span class="badge bg-success"><i class="fa-solid fa-trophy me-1"></i> Top Performer</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Evaluated</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confusion Matrix Deep Dive -->
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-header bg-white border-0 pt-4 px-4">
+            <h5 class="fw-bold text-navy mb-1"><i class="fa-solid fa-border-all text-primary me-2"></i>Confusion Matrix Diagnostics</h5>
+            <p class="text-muted small mb-0">True Positive (TP), True Negative (TN), False Positive (FP), False Negative (FN) visualization</p>
+        </div>
+        <div class="card-body p-4 text-center">
+            <img src="{{ url_for('static', filename='plots/confusion_matrices.png') }}" alt="Confusion Matrices" class="img-fluid rounded-4 border shadow-sm">
+        </div>
+    </div>
+
+    <!-- Algorithm Explanations Grid for Viva -->
+    <h4 class="fw-bold text-navy mb-3"><i class="fa-solid fa-book-open text-warning me-2"></i>Algorithm Summaries & Academic Explanations</h4>
+    
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-chart-line text-primary me-2"></i>Linear Regression</h6>
+                    <p class="text-muted small">Models linear relationship between academic predictor variables and final marks score using weighted coefficients \( y = \beta_0 + \beta_1 x_1 + \dots \).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-tree text-success me-2"></i>Random Forest</h6>
+                    <p class="text-muted small">Ensemble of decision trees trained on random subsets of data and features. Aggregates predictions to prevent overfitting and capture non-linear patterns.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-shield-halved text-info me-2"></i>Support Vector Machine (SVM)</h6>
+                    <p class="text-muted small">Constructs optimal hyperplanes in multi-dimensional feature space to maximize decision margin between PASS and FAIL student classes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-share-nodes text-warning me-2"></i>Naive Bayes</h6>
+                    <p class="text-muted small">Probabilistic classifier based on Bayes' Theorem with conditional independence assumption between student attendance, study hours, and backlogs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-diagram-project text-purple me-2"></i>K-Means Clustering</h6>
+                    <p class="text-muted small">Unsupervised partition algorithm grouping students into K=3 clusters based on centroid Euclidean distance minimization across academic features.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold text-navy mb-2"><i class="fa-solid fa-sliders text-danger me-2"></i>Logistic Regression</h6>
+                    <p class="text-muted small">Transforms linear combinations of student parameters using the Sigmoid function to output probability estimations for PASS/FAIL binary outcome.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
