@@ -1,4 +1,3 @@
-
 # AI-Based Student Performance Prediction and Risk Analysis System
 
 **A Full-Stack Machine Learning Web Application for Academic Performance Forecasting, Pass/Fail Classification, Student Risk Analysis, and K-Means Clustering.**
